@@ -416,6 +416,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         case BLE_GAP_EVT_DISCONNECTED:
         {
             NRF_LOG_INFO("Disconnected.");
+            uartWorker.enabled = 0;
             ampx_indicate(INDICATE_DISCONNECTED);
         } break;
 
@@ -430,6 +431,9 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             uint16_t min = p_ble_evt->evt.gap_evt.params.connected.conn_params.min_conn_interval;
             uint16_t max = p_ble_evt->evt.gap_evt.params.connected.conn_params.max_conn_interval;
             NRF_LOG_INFO("Connection interval: Min: %d (%dms), Max: %d (%dms)", min, ((min * UNIT_1_25_MS) / 1000), max, ((max * UNIT_1_25_MS) / 1000));
+
+            uart_reset_status();
+            uartWorker.enabled = 1;
         } break;
 
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
@@ -516,9 +520,10 @@ void gatt_evt_handler(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_t const * p_evt)
 
 /**@brief Function for the Peer Manager initialization.
  */
+/*
 static void peer_manager_init(void)
 {
-    /*ble_gap_sec_params_t sec_param;
+    ble_gap_sec_params_t sec_param;
     ret_code_t           err_code;
 
     err_code = pm_init();
@@ -541,11 +546,12 @@ static void peer_manager_init(void)
     sec_param.kdist_peer.id  = 1;
 
     err_code = pm_sec_params_set(&sec_param);
-    APP_ERROR_CHECK(err_code);*/
+    APP_ERROR_CHECK(err_code);
 
     //err_code = pm_register(pm_evt_handler);
     //APP_ERROR_CHECK(err_code);
 }
+*/
 
 /**@brief Function for initializing the Advertising functionality.
  */
@@ -617,8 +623,7 @@ static void advertising_start(void)
     APP_ERROR_CHECK(err_code);
 }
 
-/**@brief Function for uart handling.
- */
+/**@brief Function for UART processing.*/
 static void process_uart(void)
 {
     if (!uartWorker.enabled)
@@ -680,18 +685,16 @@ int main(void)
     services_init();
     advertising_init();
     conn_params_init();
-    peer_manager_init();
+    uart_init();
     ampx_init();
 
     // Start execution.
     NRF_LOG_INFO("AmpX started.");
 
-    uart_init();
-
     advertising_start();
 
     // Enter main loop.
-    for (;;)
+    while (1)
     {
         //idle_state_handle();
         process_uart();

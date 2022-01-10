@@ -2,18 +2,7 @@
 #include "ble.h"
 #include "sdk_common.h"
 #include "ble_srv_common.h"
-
-
-#define NRF_LOG_MODULE_NAME ble_rws
-#if BLE_RW_CONFIG_LOG_ENABLED
-#define NRF_LOG_LEVEL       BLE_RWS_CONFIG_LOG_LEVEL
-#define NRF_LOG_INFO_COLOR  BLE_RWS_CONFIG_INFO_COLOR
-#define NRF_LOG_DEBUG_COLOR BLE_RWS_CONFIG_DEBUG_COLOR
-#else // BLE_RWS_CONFIG_LOG_ENABLED
-//#define NRF_LOG_LEVEL       0
-#endif // BLE_RWS_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-NRF_LOG_MODULE_REGISTER();
 
 
 #define BLE_UUID_RWS_RX_CHARACTERISTIC 0x87F6              /**< The UUID of the RX Characteristic. */
@@ -149,10 +138,13 @@ void ble_rws_on_ble_evt(ble_evt_t const* p_ble_evt, void* p_context)
 {
     if ((p_context == NULL) || (p_ble_evt == NULL))
     {
+        NRF_LOG_INFO("ERROR ON: ble_rws_on_ble_evt !!!");
         return;
     }
 
     ble_rws_t* p_rws = (ble_rws_t *)p_context;
+
+    NRF_LOG_INFO("EVENT: ble_rws_on_ble_evt, id: 0x%02X", p_ble_evt->header.evt_id);
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -161,6 +153,7 @@ void ble_rws_on_ble_evt(ble_evt_t const* p_ble_evt, void* p_context)
             break;
 
         case BLE_GATTS_EVT_WRITE:
+          NRF_LOG_INFO("EVENT: WRITE");
             on_write(p_rws, p_ble_evt);
             break;
 
@@ -168,7 +161,18 @@ void ble_rws_on_ble_evt(ble_evt_t const* p_ble_evt, void* p_context)
             on_hvx_tx_complete(p_rws, p_ble_evt);
             break;
 
+        case BLE_GATTC_EVT_EXCHANGE_MTU_RSP:
+        {
+           NRF_LOG_INFO("BLE_GATTC_EVT_EXCHANGE_MTU_RSP");
+        } break;
+
+        case BLE_GAP_OPT_AUTH_PAYLOAD_TIMEOUT:
+        {
+            NRF_LOG_INFO("BLE_GAP_OPT_AUTH_PAYLOAD_TIMEOUT");
+        } break;
+
         default:
+          NRF_LOG_INFO("DEFAULT id: 0x%02X | %d", p_ble_evt->header.evt_id, p_ble_evt->header.evt_id);
             // No implementation needed.
             break;
     }
@@ -209,9 +213,11 @@ uint32_t ble_rws_init(ble_rws_t * p_rws, ble_rws_init_t const * p_rws_init)
     add_char_params.is_var_len               = true;
     add_char_params.char_props.write         = 1;
     add_char_params.char_props.write_wo_resp = 1;
+    add_char_params.char_props.notify = 1;
 
     add_char_params.read_access  = SEC_OPEN;
     add_char_params.write_access = SEC_OPEN;
+    add_char_params.cccd_write_access = SEC_OPEN;
 
     err_code = characteristic_add(p_rws->service_handle, &add_char_params, &p_rws->rx_handles);
     if (err_code != NRF_SUCCESS)
