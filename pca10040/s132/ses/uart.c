@@ -6,9 +6,9 @@
 
 #define UART_RX_PIN_NUMBER    8
 #define UART_TX_PIN_NUMBER    6
-#define UART_CTS_PIN_NUMBER   7
-#define UART_RTS_PIN_NUMBER   5
-#define UART_HWFC             APP_UART_FLOW_CONTROL_DISABLED
+#define UART_CTS_PIN_NUMBER   5
+#define UART_RTS_PIN_NUMBER   7
+#define UART_HWFC             APP_UART_FLOW_CONTROL_ENABLED
 #define UART_PARITY           false
 #define UART_TX_BUFFER_SIZE   256
 #define UART_RX_BUFFER_SIZE   256
