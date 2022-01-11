@@ -416,8 +416,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         case BLE_GAP_EVT_DISCONNECTED:
         {
             NRF_LOG_INFO("Disconnected.");
-            uartWorker.enabled = 0;
             ampx_indicate(INDICATE_DISCONNECTED);
+            uartWorker.enabled = 0;
         } break;
 
         case BLE_GAP_EVT_CONNECTED:

@@ -2,8 +2,6 @@
 <session>
  <Bookmarks/>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
-  <BreakpointListItem trigger="" line="267" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../../main.c" useHWbreakpoint="false"/>
-  <BreakpointListItem trigger="" line="274" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../../main.c" useHWbreakpoint="false"/>
   <Exceptions set="MemManage;UsageFault_Coprocessor;UsageFault_CheckingError;UsageFault_StateError;BusFault;ExceptionEntryReturnFault;HardFault"/>
  </Breakpoints>
  <ExecutionProfileWindow/>
@@ -62,16 +60,10 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="10" y="687" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../main.c" selected="0" top="657" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="505" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="478" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="51" y="6816" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../config/sdk_config.h" selected="0" top="6805" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="1" y="287" useTextEdit="1" openedFrom="C:/Users/Admin/Desktop/Elektronika/Code/Nordic/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/AmpX_Application/main.c" useBinaryEdit="0" left="0" path="ble_rws.c" selected="0" top="236" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="43" y="10" useTextEdit="1" openedFrom="C:/Users/Admin/Desktop/Elektronika/Code/Nordic/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/AmpX_Application/main.c" useBinaryEdit="0" left="0" path="ampx.c" selected="0" top="39" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="110" useTextEdit="1" openedFrom="C:/Users/Admin/Desktop/Elektronika/Code/Nordic/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/AmpX_Application/main.c" useBinaryEdit="0" left="0" path="uart.c" selected="0" top="72" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="6" useTextEdit="1" openedFrom="C:/Users/Admin/Desktop/Elektronika/Code/Nordic/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/AmpX_Application/pca10040/s132/ses/ampx.c" useBinaryEdit="0" left="0" path="ampx.h" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="36" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="uart.h" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="6" y="112" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="ble_rws.h" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="timers.h" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="timers.c" selected="1" top="39" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="14" y="13" useTextEdit="1" openedFrom="C:/Users/Admin/Desktop/Elektronika/Code/Nordic/nRF5_SDK_17.1.0_ddde560/examples/ble_peripheral/AmpX_Application/main.c" useBinaryEdit="0" left="0" path="ampx.c" selected="0" top="6" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="AmpX_Application" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="C:/Users/Admin/Desktop/Elektronika/Code/Nordic/nRF5_SDK_17.1.0_ddde560/components/libraries/uart" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>
