@@ -88,7 +88,7 @@
 
 #define DEVICE_NAME                     "AmpX"                                  /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME               "MBR"                                   /**< Manufacturer. Will be passed to Device Information Service. */
-#define APP_ADV_INTERVAL                300                                     /**< The advertising interval (in units of 0.625 ms. This value corresponds to 187.5 ms). */
+#define APP_ADV_INTERVAL                200                                     /**< The advertising interval (in units of 0.625 ms. This value corresponds to 125 ms). */
 
 #define APP_ADV_DURATION                0 //18000                               /**< The advertising duration (180 seconds) in units of 10 milliseconds. */
 #define APP_BLE_OBSERVER_PRIO           3                                       /**< Application's BLE observer priority. You shouldn't need to modify this value. */
@@ -211,11 +211,22 @@ static void gap_params_init(void)
 }
 
 
+/**@brief Function for handling events from the GATT library. */
+void gatt_evt_handler(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_t const * p_evt)
+{
+    if ((m_conn_handle == p_evt->conn_handle) && (p_evt->evt_id == NRF_BLE_GATT_EVT_ATT_MTU_UPDATED))
+    {
+        m_ble_rws_max_data_len = p_evt->params.att_mtu_effective - OPCODE_LENGTH - HANDLE_LENGTH;
+        NRF_LOG_INFO("Data len is set to 0x%X(%d)", m_ble_rws_max_data_len, m_ble_rws_max_data_len);
+    }
+    NRF_LOG_INFO("ATT MTU exchange completed. Central 0x%x | Peripheral 0x%x", p_gatt->att_mtu_desired_central, p_gatt->att_mtu_desired_periph);
+}
+
 /**@brief Function for initializing the GATT module.
  */
 static void gatt_init(void)
 {
-    ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
+    ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, gatt_evt_handler);
     APP_ERROR_CHECK(err_code);
     err_code = nrf_ble_gatt_att_mtu_periph_set(&m_gatt, NRF_SDH_BLE_GATT_MAX_MTU_SIZE);
     APP_ERROR_CHECK(err_code);
@@ -504,19 +515,6 @@ static void ble_stack_init(void)
     // Register a handler for BLE events.
     NRF_SDH_BLE_OBSERVER(m_ble_observer, APP_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 }
-
-// TODO: Ovo je dodano...
-/**@brief Function for handling events from the GATT library. */
-void gatt_evt_handler(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_t const * p_evt)
-{
-    if ((m_conn_handle == p_evt->conn_handle) && (p_evt->evt_id == NRF_BLE_GATT_EVT_ATT_MTU_UPDATED))
-    {
-        m_ble_rws_max_data_len = p_evt->params.att_mtu_effective - OPCODE_LENGTH - HANDLE_LENGTH;
-        NRF_LOG_INFO("Data len is set to 0x%X(%d)", m_ble_rws_max_data_len, m_ble_rws_max_data_len);
-    }
-    NRF_LOG_INFO("ATT MTU exchange completed. central 0x%x peripheral 0x%x", p_gatt->att_mtu_desired_central, p_gatt->att_mtu_desired_periph);
-}
-
 
 /**@brief Function for the Peer Manager initialization.
  */
