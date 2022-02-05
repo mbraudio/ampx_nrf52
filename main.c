@@ -668,6 +668,18 @@ static void process_uart(void)
     }
 }
 
+/**@brief Request for HFCLK and wait until running.
+ */
+void requestHfclk(void)
+{
+    uint32_t isRunning = 0;
+    sd_clock_hfclk_request();
+    do
+    { 
+        sd_clock_hfclk_is_running(&isRunning); 
+    } while (!isRunning);
+}
+
 
 /**@brief Function for application main entry.
  */
@@ -688,6 +700,9 @@ int main(void)
 
     // Start execution.
     NRF_LOG_INFO("AmpX started.");
+
+    // Possible solution for UART framing errors. Testing!
+    requestHfclk();
 
     advertising_start();
 

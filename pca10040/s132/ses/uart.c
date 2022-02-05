@@ -2,6 +2,7 @@
 #include "app_uart.h"
 #include "ampx.h"
 #include "nrf_log.h"
+#include "nrf52_bitfields.h"
 
 
 #define UART_RX_PIN_NUMBER    8
