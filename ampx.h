@@ -1,5 +1,5 @@
-#ifndef _BOARD_H_
-#define _BOARD_H_
+#ifndef _AMPX_H_
+#define _AMPX_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,11 +10,6 @@ extern "C" {
 #define LED_CONNECTION_PIN_NUMBER     13
 #define LED_RX_PIN_NUMBER              1
 #define LED_TX_PIN_NUMBER              0
-
-#define PIN_I2C_SDA 26
-#define PIN_I2C_SCL 27
-#define PIN_BT0     21
-#define PIN_BT1     22
 
 typedef enum
 {

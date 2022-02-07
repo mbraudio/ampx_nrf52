@@ -9,11 +9,6 @@ void ampx_init(void)
     nrf_gpio_cfg_output(LED_CONNECTION_PIN_NUMBER);
     nrf_gpio_cfg_output(LED_RX_PIN_NUMBER);
     nrf_gpio_cfg_output(LED_TX_PIN_NUMBER);
-    // Connected but not used
-    nrf_gpio_cfg_input(PIN_I2C_SDA, NRF_GPIO_PIN_NOPULL);
-    nrf_gpio_cfg_input(PIN_I2C_SCL, NRF_GPIO_PIN_NOPULL);
-    nrf_gpio_cfg_input(PIN_BT0, NRF_GPIO_PIN_NOPULL);
-    nrf_gpio_cfg_input(PIN_BT1, NRF_GPIO_PIN_NOPULL);
 }
 
 void ampx_indicate(const indicate_t state)

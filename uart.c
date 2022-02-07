@@ -2,12 +2,13 @@
 #include "app_uart.h"
 #include "ampx.h"
 #include "nrf_log.h"
+#include "nrf52_bitfields.h"
 
 
 #define UART_RX_PIN_NUMBER    8
 #define UART_TX_PIN_NUMBER    6
-#define UART_CTS_PIN_NUMBER   7
-#define UART_RTS_PIN_NUMBER   5
+#define UART_CTS_PIN_NUMBER   5
+#define UART_RTS_PIN_NUMBER   7
 #define UART_HWFC             APP_UART_FLOW_CONTROL_ENABLED
 #define UART_PARITY           false
 #define UART_TX_BUFFER_SIZE   256
@@ -27,11 +28,12 @@ void uart_event_handle(app_uart_evt_t * p_event)
 
         case APP_UART_COMMUNICATION_ERROR: 
         {
-            // Shendlaj ovo sa resartom ili clearanjem UART-a!
-            //APP_ERROR_HANDLER(p_event->data.error_communication);
-            NRF_LOG_ERROR("APP_UART_COMMUNICATION_ERROR");
-            app_uart_close();
-            uart_init();
+          // Shendlaj ovo sa resartom ili clearanjem UART-a!
+          //APP_ERROR_HANDLER(p_event->data.error_communication);
+          NRF_LOG_ERROR("APP_UART_COMMUNICATION_ERROR");
+          uartWorker.enabled = 0;
+          uart_reset_status();
+          uartWorker.enabled = 1;
         } break;
 
         case APP_UART_FIFO_ERROR:
@@ -39,7 +41,9 @@ void uart_event_handle(app_uart_evt_t * p_event)
           // Shendlaj ovo sa resartom ili clearanjem UART-a!
           //APP_ERROR_HANDLER(p_event->data.error_code);
           NRF_LOG_ERROR("APP_UART_FIFO_ERROR");
+          uartWorker.enabled = 0;
           uart_reset_status();
+          uartWorker.enabled = 1;
         } break;
             
 
@@ -64,11 +68,10 @@ void uart_init(void)
         .baud_rate    = UART_BAUDRATE
     };
 
-    APP_UART_FIFO_INIT(&comm_params, UART_RX_BUFFER_SIZE, UART_TX_BUFFER_SIZE, uart_event_handle, APP_IRQ_PRIORITY_LOWEST, err_code);
+    APP_UART_FIFO_INIT(&comm_params, UART_RX_BUFFER_SIZE, UART_TX_BUFFER_SIZE, uart_event_handle, APP_IRQ_PRIORITY_MID/*APP_IRQ_PRIORITY_LOWEST*/, err_code);
     APP_ERROR_CHECK(err_code);
 
     uart_reset_status();
-    uartWorker.enabled = 1;
 }
 
 void uart_close(void)
@@ -81,12 +84,13 @@ void uart_reset_status(void)
 {
     uint32_t err_code;
 
-    err_code = app_uart_flush();
-    APP_ERROR_CHECK(err_code);
-
+    uartWorker.byte = 0xFF;
     uartWorker.byte_index = 0;
     uartWorker.ble_buffer_available = 1;
     uartWorker.tx_complete = 0;
+
+    err_code = app_uart_flush();
+    APP_ERROR_CHECK(err_code);
 }
 
 void uart_send(const uint8_t* data, const uint16_t length)
