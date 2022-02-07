@@ -144,7 +144,7 @@ void ble_rws_on_ble_evt(ble_evt_t const* p_ble_evt, void* p_context)
 
     ble_rws_t* p_rws = (ble_rws_t *)p_context;
 
-    NRF_LOG_INFO("EVENT: ble_rws_on_ble_evt, id: 0x%02X", p_ble_evt->header.evt_id);
+    //NRF_LOG_INFO("EVENT: ble_rws_on_ble_evt, id: 0x%02X", p_ble_evt->header.evt_id);
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -153,7 +153,7 @@ void ble_rws_on_ble_evt(ble_evt_t const* p_ble_evt, void* p_context)
             break;
 
         case BLE_GATTS_EVT_WRITE:
-          NRF_LOG_INFO("EVENT: WRITE");
+            NRF_LOG_INFO("EVENT: WRITE");
             on_write(p_rws, p_ble_evt);
             break;
 
@@ -163,16 +163,16 @@ void ble_rws_on_ble_evt(ble_evt_t const* p_ble_evt, void* p_context)
 
         case BLE_GATTC_EVT_EXCHANGE_MTU_RSP:
         {
-           NRF_LOG_INFO("BLE_GATTC_EVT_EXCHANGE_MTU_RSP");
+            //NRF_LOG_INFO("BLE_GATTC_EVT_EXCHANGE_MTU_RSP");
         } break;
 
         case BLE_GAP_OPT_AUTH_PAYLOAD_TIMEOUT:
         {
-            NRF_LOG_INFO("BLE_GAP_OPT_AUTH_PAYLOAD_TIMEOUT");
+            //NRF_LOG_INFO("BLE_GAP_OPT_AUTH_PAYLOAD_TIMEOUT");
         } break;
 
         default:
-          NRF_LOG_INFO("DEFAULT id: 0x%02X | %d", p_ble_evt->header.evt_id, p_ble_evt->header.evt_id);
+            //NRF_LOG_INFO("DEFAULT id: 0x%02X | %d", p_ble_evt->header.evt_id, p_ble_evt->header.evt_id);
             // No implementation needed.
             break;
     }
