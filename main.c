@@ -600,19 +600,6 @@ static void power_management_init(void)
 }
 
 
-/**@brief Function for handling the idle state (main loop).
- *
- * @details If there is no pending log operation, then sleep until next the next event occurs.
- */
-static void idle_state_handle(void)
-{
-    if (NRF_LOG_PROCESS() == false)
-    {
-        nrf_pwr_mgmt_run();
-    }
-}
-
-
 /**@brief Function for starting advertising.
  */
 static void advertising_start(void)
@@ -709,8 +696,8 @@ int main(void)
     // Enter main loop.
     while (1)
     {
-        //idle_state_handle();
         process_uart();
+        NRF_LOG_PROCESS();
     }
 }
 
