@@ -153,7 +153,7 @@ void ble_rws_on_ble_evt(ble_evt_t const* p_ble_evt, void* p_context)
             break;
 
         case BLE_GATTS_EVT_WRITE:
-            NRF_LOG_INFO("EVENT: WRITE");
+            //NRF_LOG_INFO("EVENT: WRITE");
             on_write(p_rws, p_ble_evt);
             break;
 
